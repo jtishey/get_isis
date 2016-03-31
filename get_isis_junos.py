@@ -25,6 +25,8 @@ def juniper(host):
             elif len(item) > 4:
                 if re.search("..\:..\:..\:..",item) == None:
                     neighbor = item
+                    neighbor = neighbor.replace('-re0','')  # Don't care about Junipers with apply-
+                    neighbor = neighbor.replace('-re1','')  # groups to append active RE to hostname
         # Get interface traffic
         show_int = net_connect.send_command("show interface " + interface.split('.')[0] + ' | match "put rate"')
         show_int = show_int.splitlines()

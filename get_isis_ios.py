@@ -21,6 +21,8 @@ def cisco_ios(host):
             if re.search("..[0-9]+/[0-9]+", item) != None or re.search("^Po", item) != None:
                 interface = item
             neighbor = line.split()[0]
+            neighbor = neighbor.replace('-re0','')  # Don't care about Junipers with apply-
+            neighbor = neighbor.replace('-re1','')  # groups to append active RE to hostname
         # Get interface traffic
         show_int = net_connect.send_command("show interface " + interface.split('.')[0] + " | include put rate")
         show_int = show_int.splitlines()

@@ -1,30 +1,41 @@
+#-------------------------------------------#
+# Converts rate to bits, Kb, Mb, or Gb      |
+#-------------------------------------------#
 class ReadableRate():
     def __init__(self,x):
         num = len(str(x))
-        if num < 4:
+        if num < 4:                                # < 4 digits = bits
             self.rate = str(x) + " b"
-        elif num < 7:
+        elif num < 7:                              # < 7 digits = Kilobits
             x = x / 1000.0
             self.rate = str("%.1f" + " K") % x
-        elif num < 10:
+        elif num < 10:                             # < 10 digits = Megabits
             x = x / 1000000.0
             self.rate = str("%.1f" + " M") % x
         else:
-            x = x / 1000000000.0
+            x = x / 1000000000.0                   # 10+ digits = Gigabits
             self.rate = str("%.1f" + " G") % x
 
+
+#-------------------------------------------#
+# Get host/IP, user, pass, and device type  #
+#-------------------------------------------#
 def get_host():
     import sys
     from getpass import getpass
+
+    # Things that can be entered to define OS:
     JUNIPER = ['junos','juniper','j','jun']
     CISCO_IOS = ['cisco','cisco_ios','ios','cisco-ios','cisco ios','i']
     CISCO_XR = ['xr','cisco_xr','cisco-xr','ios-xr','ios xr','x']
     
+    # Grab info:
     rtr = raw_input('Hostname/IP:')
     os = raw_input('Device OS:')
     username = raw_input('Username:')
     password = getpass()
     
+    # Correct user input:
     os = os.lower()
     if os in JUNIPER:
         os = 'juniper'
@@ -36,17 +47,22 @@ def get_host():
         print 'ERR: OS should be juniper, ios or xr'
         sys.exit()
     
+    # Define host dict for netmiko:
     host = {
         'device_type': os,
         'ip' : rtr,
         'username' : username,
         'password': password,
         'port': 22,
-        #'ssh_config_file': '~/.ssh/proxy.config',
+        'ssh_config_file': '~/.ssh/proxy.config',
         'verbose': False,
     }
     return host
 
+
+#-------------------------------------------#
+# Create table header with hostname/IP      |
+#-------------------------------------------#
 def table_header(name):
     host_string = ('|   ' + name + '        |')
     header_string = '+'

@@ -29,22 +29,15 @@ def execute(host):
         neighbor = neighbor.replace('-re1','')  # groups to append active RE to hostname
         # Get interface traffic
         show_int = net_connect.send_command("show interface " + interface.split('.')[0] + ' | include "put rate"')
-        show_int = show_int.splitlines()
-        for lines in show_int:
-            counter = 0
-            for word in lines.split():
-                if re.search("bits",word) == None:
-                    counter+=1
-                else:
-                    counter -=1
-                    if "nput" in lines:
-                        rx = ReadableRate(int(lines.split()[counter]))
-                        total_traffic = total_traffic + int(lines.split()[counter])
-                        counter +=1
+        for lines in show_int.splitlines():
+            for i, word in enumerate(lines.split()):
+                if 'bits' in word:
+                    traf = int(lines.split()[i-1])
+                    total_traffic = total_traffic + traf
+                    if 'nput' in lines:
+                        rx = ReadableRate(traf)
                     elif "utput" in lines:
-                        tx = ReadableRate(int(lines.split()[counter]))
-                        total_traffic = total_traffic + int(lines.split()[counter])
-                        counter +=1
+                        tx = ReadableRate(traf)
         # Get isis metric
         show_isis = net_connect.send_command("show isis interface " + interface + " | include Metric")
         show_isis = show_isis.splitlines()
@@ -53,7 +46,7 @@ def execute(host):
                 if re.search("[0-9]+/[0-9]+", word) != None:
                     metric = word
         table.add_row([interface,rx.rate,tx.rate,neighbor,metric,(total_traffic*-1)])
-    
+        # (multiplying total_traffic by -1 to reverse table sort order)
     net_connect.disconnect()
     table_header(host['ip'])
     print(table.get_string(sortby='Total_Traffic'))

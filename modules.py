@@ -16,12 +16,12 @@ class ReadableRate():
 def get_host():
     import sys
     from getpass import getpass
-    JUNIPER = ['junos','juniper']
-    CISCO_IOS = ['cisco','cisco_ios','ios','cisco-ios','cisco ios']
-    CISCO_XR = ['xr','cisco_xr','cisco-xr','ios-xr','ios xr']
+    JUNIPER = ['junos','juniper','j','jun']
+    CISCO_IOS = ['cisco','cisco_ios','ios','cisco-ios','cisco ios','i']
+    CISCO_XR = ['xr','cisco_xr','cisco-xr','ios-xr','ios xr','x']
     
     rtr = raw_input('Hostname/IP:')
-    os = raw_input('Device OS: ')
+    os = raw_input('Device OS:')
     username = raw_input('Username:')
     password = getpass()
     
@@ -42,7 +42,16 @@ def get_host():
         'username' : username,
         'password': password,
         'port': 22,
-        'ssh_config_file': '~/.ssh/proxy.config',
+        #'ssh_config_file': '~/.ssh/proxy.config',
         'verbose': False,
     }
     return host
+
+def table_header(name):
+    host_string = ('|   ' + name + '        |')
+    header_string = '+'
+    for letter in range(len(host_string)-2):
+        header_string = header_string + '-'
+    header_string = header_string + '+'
+    print(header_string)
+    print(host_string)

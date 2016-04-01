@@ -13,11 +13,11 @@ from modules import get_host
 host = get_host()
 
 if host['device_type'] == 'juniper':
-    import get_isis_junos
-    table = get_isis_junos.juniper(host)
+    import junos
+    junos.execute(host)
 elif host['device_type'] == 'cisco_ios':
-    import get_isis_ios
-    table = get_isis_ios.cisco_ios(host)
+    import cisco_ios
+    cisco_ios.execute(host)
 elif host['device_type'] == 'cisco_xr':
-    import get_isis_xr
-    table = get_isis_xr.cisco_xr(host)
+    import cisco_xr
+    cisco_xr.execute(host)

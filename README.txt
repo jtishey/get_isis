@@ -25,3 +25,19 @@ Also, get_isis can be used to connect via local SOCK proxy:
     (Make it executable and in your PATH)
 4. Start a local SOCKS proxy connection on 127.0.0.1:1080
 
+
+EXAMPLE:
+$ python get_isis.py 
+Hostname/IP:10.0.10.4
+Device OS:junos
+Username:admin
+Password: 
++-----------------------+
+|   10.0.10.4           |
++--------------+--------+--------+----------+--------+---------------+
+|  Interface   |   In   |  Out   | Neighbor | Metric | Total_Traffic |
++--------------+--------+--------+----------+--------+---------------+
+| ge-0/0/4.145 | 11.8 K | 15.6 K |  vSRX5   | 10/10  |     -27408    |
+| ge-0/0/4.134 | 12.9 K | 9.9 K  |  vSRX3   | 10/10  |     -22752    |
+| ge-0/0/4.114 | 10.4 K | 9.8 K  |  vSRX1   | 10/10  |     -20240    |
++--------------+--------+--------+----------+--------+---------------+

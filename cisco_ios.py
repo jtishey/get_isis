@@ -9,7 +9,7 @@ def execute(host):
     interface, neighbor = "",""
     rx,tx = "",""
     table = PrettyTable(['Interface','In','Out','Neighbor','Metric','Total_Traffic'])
-    
+    try:
     net_connect = ConnectHandler(**host)
     isis_int = net_connect.send_command("show isis neighbor | i L2")
     isis_int = isis_int.splitlines()
@@ -47,8 +47,7 @@ def execute(host):
                     metric = lines.split()[counter+1]
                     metric = metric.split(',')[0]
                 counter +=1
-        table.add_row([interface,rx.rate,tx.rate,neighbor,metric,(total_traffic*-1)])
-        # (multiplying total_traffic by -1 to reverse table sort order)
+        table.add_row([interface,rx.rate,tx.rate,neighbor,metric,(total_traffic)])
     net_connect.disconnect()
     table_header(host['ip'])
-    print(table.get_string(sortby='Total_Traffic'))
+    print(table.get_string(sortby='Total_Traffic',reversesort=True))

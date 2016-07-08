@@ -48,8 +48,7 @@ def execute(host):
             for word in lines .split():
                 if re.search("[0-9]+/[0-9]+", word) != None:
                     metric = word
-        table.add_row([interface,rx.rate,tx.rate,neighbor,metric,(total_traffic*-1)])
-        # (multiplying total_traffic by -1 to reverse table sort order)
+        table.add_row([interface,rx.rate,tx.rate,neighbor,metric,(total_traffic)])
     net_connect.disconnect()
     table_header(host['ip'])
-    print(table.get_string(sortby='Total_Traffic'))
+    print(table.get_string(sortby='Total_Traffic',reversesort=True))

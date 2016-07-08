@@ -11,7 +11,7 @@ The default behavior is currently to run with no arguments
 and prompt for the following:
   Hostname/IP, Device OS, Username, Password 
 
-Also, get_isis can be used to connect via local SOCK proxy:
+Also, get_isis can be used to connect via local SOCKS proxy:
 
 1. Uncomment line 45 in modules.py
 2. Create a file in your ~/.ssh/proxy.config as follows:

@@ -54,7 +54,7 @@ def get_host():
         'username' : username,
         'password': password,
         'port': 22,
-        #'ssh_config_file': '~/.ssh/proxy.config',
+        'ssh_config_file': '~/.ssh/proxy.config',
         'verbose': False,
     }
     return host

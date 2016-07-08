@@ -17,12 +17,13 @@ Also, get_isis can be used to connect via local SOCKS proxy:
 2. Create a file in your ~/.ssh/proxy.config as follows:
       echo 'ProxyCommand proxy_cheater %h' > ~/.ssh/proxy.config
 3. Create a bash script to fix the IP/port for netcat:
+      vim proxy_cheater
       #!/bin/bash
       ADDR="$1"
       HOST=${ADDR%:*}  # get the part before the colon
       PORT=${ADDR##*:}  # get the part after the colon
       /bin/nc -x 127.0.0.1:1080 $HOST $PORT
-    (Make it executable and in your PATH)
+   (Make it executable and put it in your PATH)
 4. Start a local SOCKS proxy connection on 127.0.0.1:1080
 
 

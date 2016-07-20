@@ -26,6 +26,15 @@ Also, get_isis can be used to connect via local SOCKS proxy:
    (Make it executable and put it in your PATH)
 4. Start a local SOCKS proxy connection on 127.0.0.1:1080
 
+5. If the following Error is seen connecting to Cisco IOS devices:
+		paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+ 	Edit transport.py near line 487 (something like /usr/local/lib/python2.7/dist-packages/paramiko/transport.py)
+ 		# synchronous, wait for a result
+        self.completion_event = event = threading.Event()
+        # delay starting thread for SSH proxies
+        event.wait(3)  # MONKEY_PATCH added wait
+        self.start()
+        while True:
 
 EXAMPLE:
 $ python get_isis.py

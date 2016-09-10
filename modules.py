@@ -1,6 +1,8 @@
 #-------------------------------------------#
 # Converts rate to bits, Kb, Mb, or Gb      |
 #-------------------------------------------#
+
+
 class ReadableRate():
     def __init__(self,x):
         num = len(str(x))

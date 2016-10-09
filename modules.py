@@ -2,7 +2,6 @@
 # Converts rate to bits, Kb, Mb, or Gb      |
 #-------------------------------------------#
 
-
 class ReadableRate():
     def __init__(self,x):
         num = len(str(x))
@@ -27,16 +26,23 @@ def get_host():
     from getpass import getpass
 
     # Things that can be entered to define OS:
-    JUNIPER = ['junos','juniper','j','jun']
-    CISCO_IOS = ['cisco','cisco_ios','ios','cisco-ios','cisco ios','i']
-    CISCO_XR = ['xr','cisco_xr','cisco-xr','ios-xr','ios xr','x']
-    
+    JUNIPER = ['junos', 'juniper', 'j', 'jun']
+    CISCO_IOS = ['cisco', 'cisco_ios', 'ios', 'cisco-ios', 'cisco ios', 'i']
+    CISCO_XR = ['xr', 'cisco_xr', 'cisco-xr', 'ios-xr', 'ios xr', 'x']
+
     # Grab info:
     rtr = raw_input('Hostname/IP:')
-    os = raw_input('Device OS:')
+    os = raw_input('Device OS:').lower()
+    while os not in JUNIPER and os not in CISCO_IOS and os not in CISCO_XR:
+        print 'ERR: Please enter junos, ios, or xr'
+        os = raw_input('Device OS:').lower()
     username = raw_input('Username:')
     password = getpass()
-    
+    proxy = raw_input('Use .ssh/proxy.config? [y/n]:').lower()
+    while proxy != 'y' and proxy != 'n':
+        print 'ERR: Please enter y/n for proxy'
+        proxy = raw_input('Use .ssh/proxy.config? [y/n]:').lower()
+
     # Correct user input:
     os = os.lower()
     if os in JUNIPER:
@@ -45,20 +51,19 @@ def get_host():
         os = 'cisco_ios'
     elif os in CISCO_XR:
         os = 'cisco_xr'
-    else:
-        print 'ERR: OS should be juniper, ios or xr'
-        sys.exit()
-    
+
     # Define host dict for netmiko:
     host = {
         'device_type': os,
-        'ip' : rtr,
-        'username' : username,
+        'ip': rtr,
+        'username': username,
         'password': password,
         'port': 22,
-        'ssh_config_file': '~/.ssh/proxy.config',
         'verbose': False,
     }
+    if proxy == 'y':
+        host['ssh_config_file'] = '~/.ssh/proxy.config',
+
     return host
 
 

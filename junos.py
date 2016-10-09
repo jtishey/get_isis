@@ -22,11 +22,12 @@ def execute(host):
         for item in line.split():
             if re.search("..\-[0-9]+/[0-9]+/[0-9+]", item) is not None or re.search("^ae", item) is not None:
                 interface = item
-            elif len(item) > 4:
-                if re.search("..\:..\:..\:..", item) is not None:
-                    neighbor = item
-                    neighbor = neighbor.replace('-re0', '')  # Don't care about Junipers with apply-
-                    neighbor = neighbor.replace('-re1', '')  # groups to append active RE to hostname
+            #elif len(item) > 3:
+            #    if re.search(".{1,2}\:.{1,2}\:.{1,2}\:.{1,2}", item) is None:
+            #        neighbor = item
+            neighbor = line.split()[1]
+            neighbor = neighbor.replace('-re0', '')  # Don't care about Junipers with apply-
+            neighbor = neighbor.replace('-re1', '')  # groups to append active RE to hostname
         # Get interface traffic
         show_int = net_connect.send_command("show interface " + interface.split('.')[0] + ' | match "put rate"')
         for lines in show_int.splitlines():

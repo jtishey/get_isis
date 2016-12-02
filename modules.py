@@ -38,10 +38,10 @@ def get_host():
         os = raw_input('Device OS:').lower()
     username = raw_input('Username:')
     password = getpass()
-    proxy = raw_input('Use .ssh/proxy.config? [y/n]:').lower()
+    proxy = raw_input('Use ~/.ssh/proxy.config? [y/n]:').lower()
     while proxy != 'y' and proxy != 'n':
         print 'ERR: Please enter y/n for proxy'
-        proxy = raw_input('Use .ssh/proxy.config? [y/n]:').lower()
+        proxy = raw_input('Use ~/.ssh/proxy.config? [y/n]:').lower()
 
     # Correct user input:
     os = os.lower()
@@ -62,7 +62,7 @@ def get_host():
         'verbose': False,
     }
     if proxy == 'y':
-        host['ssh_config_file'] = '~/.ssh/proxy.config',
+        host['ssh_config_file'] = '~/.ssh/proxy.config'
 
     return host
 

@@ -1,9 +1,11 @@
 def execute(host):
+
     from netmiko import ConnectHandler
     from prettytable import PrettyTable
     from modules import ReadableRate
     from modules import table_header
     import re
+
     interface, neighbor = "", ""
     rx, tx = "", ""
     table = PrettyTable(['Interface', 'In', 'Out', 'Neighbor', 'Metric', 'Total_Traffic'])

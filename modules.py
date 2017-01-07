@@ -1,9 +1,10 @@
-#-------------------------------------------#
-# Converts rate to bits, Kb, Mb, or Gb      |
-#-------------------------------------------#
 
+
+# -------------------------------------------#
+#  Converts rate to bits, Kb, Mb, or Gb      |
+# -------------------------------------------#
 class ReadableRate():
-    def __init__(self,x):
+    def __init__(self, x):
         num = len(str(x))
         if num < 4:                                # < 4 digits = bits
             self.rate = str(x) + " b"
@@ -18,11 +19,10 @@ class ReadableRate():
             self.rate = str("%.1f" + " G") % x
 
 
-#-------------------------------------------#
-# Get host/IP, user, pass, and device type  #
-#-------------------------------------------#
+# -------------------------------------------#
+#  Get host/IP, user, pass, and device type  #
+# -------------------------------------------#
 def get_host():
-    import sys
     from getpass import getpass
 
     # Things that can be entered to define OS:
@@ -67,13 +67,13 @@ def get_host():
     return host
 
 
-#-------------------------------------------#
-# Create table header with hostname/IP      |
-#-------------------------------------------#
+# -------------------------------------------#
+#  Create table header with hostname/IP      |
+# -------------------------------------------#
 def table_header(name):
     host_string = ('|   ' + name + '        |')
     header_string = '+'
-    for letter in range(len(host_string)-2):
+    for letter in range(len(host_string) - 2):
         header_string = header_string + '-'
     header_string = header_string + '+'
     print(header_string)

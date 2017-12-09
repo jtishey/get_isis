@@ -18,7 +18,7 @@ def execute(host):
         total_traffic = 0
         # Extract neighbor and interface
         for item in line.split():
-            if re.search("^[Fa|Gi|Te|Hu|Po|Vl]", item) is not None:
+            if re.search("^(Fa|Gi|Te|Hu|Po|Vl)", item) is not None:
                 interface = item
             neighbor = line.split()[0]
             neighbor = neighbor.replace('-re0', '')  # Don't care about Junipers with apply-
